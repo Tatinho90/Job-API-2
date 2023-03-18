@@ -1,0 +1,256 @@
+openapi: 3.0.0
+info:
+  title: Jobs API
+  contact: {}
+  version: '1.0'
+servers:
+- url: http://localhost:3000/api/v1/auth
+  variables: {}
+- url: https://localhost:3000/api
+  variables: {}
+paths:
+  /register:
+    post:
+      tags:
+      - Auth
+      summary: Register
+      operationId: Register
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/RegisterRequest'
+              - example:
+                  name: tatinho92
+                  email: a_bergou2@hotmail.com
+                  password: secretPW
+            example:
+              name: tatinho92
+              email: a_bergou2@hotmail.com
+              password: secretPW
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://localhost:3000/api/v1/auth
+        variables: {}
+  /login:
+    post:
+      tags:
+      - Auth
+      summary: Login
+      operationId: Login
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/LoginRequest'
+              - example:
+                  email: a_bergou1@hotmail.com
+                  password: secretPW
+            example:
+              email: a_bergou1@hotmail.com
+              password: secretPW
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://localhost:3000/api/v1/auth
+        variables: {}
+  /v1jobs:
+    post:
+      tags:
+      - Jobs
+      summary: Create Job
+      operationId: CreateJob
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/CreateJobRequest'
+              - example:
+                  company: Facebook
+                  position: CTO
+            example:
+              company: Facebook
+              position: CTO
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: https://localhost:3000/api
+        variables: {}
+    get:
+      tags:
+      - Jobs
+      summary: Get all Jobs (by user)
+      operationId: GetallJobs(byuser)
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: https://localhost:3000/api
+        variables: {}
+  /v1jobs/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The job ID
+    get:
+      tags:
+      - Jobs
+      summary: Get Job
+      operationId: GetJob
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+      servers:
+      - url: https://localhost:3000/api
+        variables: {}
+    patch:
+      tags:
+      - Jobs
+      summary: Update Job
+      operationId: UpdateJob
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/UpdateJobRequest'
+              - example:
+                  company: random
+                  position: Clarity PPM World Manager
+            example:
+              company: random
+              position: Clarity PPM World Manager
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+      servers:
+      - url: https://localhost:3000/api
+        variables: {}
+    delete:
+      tags:
+      - Jobs
+      summary: DeleteJob
+      operationId: DeleteJob
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+      servers:
+      - url: https://localhost:3000/api
+        variables: {}
+components:
+  schemas:
+    RegisterRequest:
+      title: RegisterRequest
+      required:
+      - name
+      - email
+      - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: tatinho92
+        email: a_bergou2@hotmail.com
+        password: secretPW
+    LoginRequest:
+      title: LoginRequest
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: a_bergou1@hotmail.com
+        password: secretPW
+    CreateJobRequest:
+      title: CreateJobRequest
+      required:
+      - company
+      - position
+      type: object
+      properties:
+        company:
+          type: string
+        position:
+          type: string
+      example:
+        company: Facebook
+        position: CTO
+    UpdateJobRequest:
+      title: UpdateJobRequest
+      required:
+      - company
+      - position
+      type: object
+      properties:
+        company:
+          type: string
+        position:
+          type: string
+      example:
+        company: random
+        position: Clarity PPM World Manager
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+- name: Auth
+  description: ''
+- name: Jobs
+  description: ''
